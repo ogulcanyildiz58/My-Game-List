@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Game List - Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="header-container">
+        <h1>MY GAME LIST 🎮</h1>
+        <div class="user-info">
+            Welcome, <strong>{{ username }}</strong>!
+            <a href="/logout" class="logout-btn">Logout</a>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <h3>+ Add New Game to Your Collection</h3>
+        <form action="/add_game" method="POST" class="add-game-form">
+            <input type="text" name="game_name" placeholder="Enter Game Title..." required>
+            
+            <select name="status" required>
+                <option value="Wishlist">Wishlist</option>
+                <option value="Played">Played</option>
+            </select>
+
+            <button type="submit">Add Game</button>
+        </form>
+    </div>
+
+    <div class="dashboard-grid">
+        
+
+        <div class="column">
+            <h2 class="played-title">My Played Games ({% if played_games %}{{ played_games|length }}{% else %}0{% endif %})</h2>
+            {% if played_games %}
+                <ul class="game-list">
+                    {% for game in played_games %}
+                        <li class="game-item">
+                            <span class="game-title">{{ game.game_name }}</span>
+                            </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="empty-message">You haven't marked any games as played yet.</p>
+            {% endif %}
+        </div>
+
+
+        <div class="column">
+            <h2 class="wishlist-title">My Wishlist ({% if wishlist_games %}{{ wishlist_games|length }}{% else %}0{% endif %})</h2>
+            {% if wishlist_games %}
+                <ul class="game-list">
+                    {% for game in wishlist_games %}
+                        <li class="game-item">
+                            <span class="game-title">{{ game.game_name }}</span>
+                            </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="empty-message">Your wishlist is currently empty.</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+</body>
+</html>
