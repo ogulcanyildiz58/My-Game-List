@@ -4,24 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Game List - login/register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h2> My Game List</h2>
-    {% if error %}
-        <p style="color: red;">{{ error }}</p>
-    {% endif %}
-    {% if success %}
-        <p style="color: green;">{{ success }}</p>
-    {% endif %}
-    <p>To login: enter your <strong>username or email</strong> and password. To register: fill all fields and press Register.</p>
-    <form action="/login" method="POST">
-        <input type="text" name="username" placeholder="Username (or leave empty to use email)"><br><br>
-        <input type="email" name="email" placeholder="Email (required for registration, or use to login)"><br><br>
-        <input type="password" name="password" placeholder="Password" required><br><br>
+    <div class="login-body">
+        <div class="login-container">
+            <h1>My Game List</h1>
+            <p>To login: enter your <strong>username or email</strong> and password. To register: fill all fields and press Register.</p>
 
-        <button type="submit" name="action" value="login">Login</button>
-        <button type="submit" name="action" value="register">Register </button>
-        
-    </form>
+            {% if error %}
+                <div class="message error">{{ error }}</div>
+            {% endif %}
+            {% if success %}
+                <div class="message success">{{ success }}</div>
+            {% endif %}
+
+            <form action="/login" method="POST" class="login-form">
+                <input type="text" name="username" placeholder="Username (or leave empty to use email)">
+                <input type="email" name="email" placeholder="Email (required for registration, or use to login)">
+                <input type="password" name="password" placeholder="Password" required>
+
+                <div class="btn-group">
+                    <button type="submit" name="action" value="login" class="btn-login">Login</button>
+                    <button type="submit" name="action" value="register" class="btn-register">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
