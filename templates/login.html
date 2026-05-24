@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Game List - login/register</title>
+</head>
+<body>
+    <h2> My Game List</h2>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    {% if success %}
+        <p style="color: green;">{{ success }}</p
+    {% endif %}
+    <form action="/login" method="POST">
+        <input type="text" name="username" placeholder="Username" required><br><br>
+        <input type="email" name="email" placeholder="Email (Required for registration) " required><br><br>
+        <input type="password" name="password" placeholder="Password" required><br><br>
+
+        <button type="submit" name="action" value="login">Login</button>
+        <button type="submit" name="action" value="register">Register </button>
+        
+    </form>
+</body>
+</html>
