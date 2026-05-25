@@ -71,7 +71,31 @@ def login():
 def home():
     if 'username' not in session:
         return redirect(url_for('index'))
-    return render_template('home.html', username=session['username'])
+
+    conn = get_db_connection()
+    played_games = conn.execute('SELECT * FROM games WHERE user_id=? AND status=?', (session['user_id'], 'Played')).fetchall()
+    wishlist_games = conn.execute('SELECT * FROM games WHERE user_id=? AND status=?', (session['user_id'], 'Wishlist')).fetchall()
+    conn.close()
+    return render_template('home.html', username=session['username'], played_games=played_games, wishlist_games=wishlist_games)
+
+@app.route('/add_game', methods=['POST'])
+def add_game():
+    if 'username' not in session:
+        return redirect(url_for('index'))
+        
+    game_name = request.form['game_name']
+    status = request.form['status']
+  
+    conn = get_db_connection()
+    conn.execute('INSERT INTO games (user_id, game_name, status) VALUES (?, ?, ?)',
+                 (session['user_id'], game_name, status))
+    conn.commit()
+    conn.close()
+    
+    return redirect(url_for('home'))
+
+
+
 
 @app.route('/logout')
 def logout():
