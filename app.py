@@ -106,7 +106,7 @@ def delete_game(game_id):
         conn.close()
         return redirect(url_for('home'))
 
-    # only allow owner to delete
+
     if game['user_id'] != session['user_id']:
         conn.close()
         return redirect(url_for('home'))
@@ -115,6 +115,25 @@ def delete_game(game_id):
     conn.commit()
     conn.close()
     return redirect(url_for('home'))
+
+
+@app.route('/mark_played/<int:game_id>', methods=['POST'])
+def mark_played(game_id):
+    if 'user_id' not in session:
+        return redirect(url_for('index'))
+
+    conn = get_db_connection()
+    game = conn.execute('SELECT * FROM games WHERE id=?', (game_id,)).fetchone()
+    if not game or game['user_id'] != session['user_id']:
+        conn.close()
+        return redirect(url_for('home'))
+
+    conn.execute('UPDATE games SET status=? WHERE id=?', ('Played', game_id))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('home'))
+
+
 
 
 
