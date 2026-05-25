@@ -95,6 +95,28 @@ def add_game():
     return redirect(url_for('home'))
 
 
+@app.route('/delete_game/<int:game_id>', methods=['POST'])
+def delete_game(game_id):
+    if 'user_id' not in session:
+        return redirect(url_for('index'))
+
+    conn = get_db_connection()
+    game = conn.execute('SELECT * FROM games WHERE id=?', (game_id,)).fetchone()
+    if not game:
+        conn.close()
+        return redirect(url_for('home'))
+
+    # only allow owner to delete
+    if game['user_id'] != session['user_id']:
+        conn.close()
+        return redirect(url_for('home'))
+
+    conn.execute('DELETE FROM games WHERE id=?', (game_id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('home'))
+
+
 
 
 @app.route('/logout')
