@@ -128,6 +128,11 @@ def mark_played(game_id):
         conn.close()
         return redirect(url_for('home'))
 
+    
+    if game['status'] != 'Played':
+        conn.close()
+        return redirect(url_for('home'))
+
     conn.execute('UPDATE games SET status=? WHERE id=?', ('Played', game_id))
     conn.commit()
     conn.close()
