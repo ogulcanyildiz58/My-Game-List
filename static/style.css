@@ -21,7 +21,7 @@ body {
     line-height: 1.6;
 }
 
-/* Üst Menü / Header Alanı */
+
 .header-container {
     display: flex;
     justify-content: space-between;
@@ -63,7 +63,7 @@ body {
     color: white;
 }
 
-/* Oyun Ekleme Form Alanı */
+
 .form-section {
     background-color: var(--card-bg);
     padding: 20px;
@@ -120,7 +120,7 @@ body {
     background-color: var(--accent-hover);
 }
 
-/* Tablo/Sütun Yapısı (Oynananlar vs İstek Listesi) */
+
 .dashboard-grid {
     display: flex;
     gap: 30px;
@@ -179,6 +179,35 @@ body {
     font-size: 16px;
 }
 
+
+.game-rating {
+    margin-left: 12px;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.game-item form select {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+
+.game-item form button {
+    background: none;
+    border: none;
+    color: var(--accent-color);
+    font-weight: 700;
+    cursor: pointer;
+    padding: 6px 8px;
+}
+
+.game-item form button:hover { color: var(--accent-hover); }
+
 .empty-message {
     color: var(--text-muted);
     font-style: italic;
@@ -186,9 +215,7 @@ body {
     margin-top: 40px;
 }
 
-/* ==========================================================================
-   A) GİRİŞ VE KAYIT SAYFASI (Login UI) TASARIMLARI
-   ========================================================================== */
+/* login page */
 .login-body {
     display: flex;
     justify-content: center;
