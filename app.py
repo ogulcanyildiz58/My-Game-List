@@ -135,6 +135,33 @@ def mark_played(game_id):
 
 
 
+@app.route('/rate_game/<int:game_id>', methods=['POST'])
+def rate_game(game_id):
+    if 'user_id' not in session:
+        return redirect(url_for('index'))
+
+    rating = request.form.get('rating')
+    try:
+        rating_int = int(rating)
+    except (TypeError, ValueError):
+        return redirect(url_for('home'))
+
+    if rating_int < 1 or rating_int > 5:
+        return redirect(url_for('home'))
+
+    conn = get_db_connection()
+    game = conn.execute('SELECT * FROM games WHERE id=?', (game_id,)).fetchone()
+    if not game or game['user_id'] != session['user_id']:
+        conn.close()
+        return redirect(url_for('home'))
+
+    conn.execute('UPDATE games SET rating=? WHERE id=?', (rating_int, game_id))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('home'))
+
+
+
 
 
 
